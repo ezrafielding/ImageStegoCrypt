@@ -1,11 +1,9 @@
 from tkinter import filedialog
 from tkinter import*
 import time
-import numpy as np
-from numpy.fft import fft
+from stegcrypt import StegCrypt
 from PIL import Image
-import io
-import base64
+import numpy as np
 
 root = Tk()
 Tk().withdraw()
@@ -13,14 +11,12 @@ root.geometry("600x620+0+0")
 root.title("Image Steganocryptography Implementation")
 
 #================Variable Declaration==============================
-keyAB = IntVar()
-keyC = DoubleVar()
 folder_path_plainfile = StringVar()
 folder_path_coverfile1 = StringVar()
 folder_path_coverfile2 = StringVar()
 folder_path_stegofile = StringVar()
 status_text = StringVar()
-keyC = np.random.rand(1,1)*10**(np.round(np.random.rand(1,1)*6))
+SC = StegCrypt()
 
 #================Window Framing=================================
 Tops = Frame(root, width = 1000, relief = SUNKEN)
@@ -73,10 +69,16 @@ def browse_button_coverfile2():
     print (folder_path_coverfile2)
 
 def btnEncrypt():
-    pass
+    plaintext = SC.open_img(folder_path_plainfile.get())
+    covertext = SC.open_img(folder_path_coverfile1.get())
+    stegotext = SC.encrypt(plaintext, covertext)
+    SC.save_stegotext_tiff(stegotext, "Stegotext.tiff")
 
 def btnDecrypt():
-    pass
+    stegotext = SC.open_stegotext_tiff(folder_path_stegofile.get())
+    covertext = SC.open_img(folder_path_coverfile2.get())
+    plaintext = SC.decrypt(stegotext, covertext)
+    SC.save_image(plaintext, "Plaintext.jpg")
 
 #=========================Display===================================
 txtDisplay = Entry(window, font=('arial',8),textvariable=folder_path_plainfile, bd=5,width =50, bg="white")

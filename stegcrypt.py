@@ -188,6 +188,24 @@ class StegCrypt(object):
         tifffile.imsave(filename, stegotext)
         return self
 
+    def save_image(self, image, filename):
+        """
+        Save stegotext as tiff file
+        Parameters
+        ==========
+            stegotext : array-like, shape (rows, columns, channels)
+            The stegotext to save
+            filename : str
+            The filename to save the stegotext
+        Returns
+        =======
+            self : object
+        """
+
+        rescale = (255.0 / image.max() * (image - image.min())).astype(np.uint8)
+        img = Image.fromarray(rescale).save(filename)
+        return self
+
     def open_stegotext_tiff(self, filename):
         """
         Open a stegotext from a tiff file
@@ -205,29 +223,10 @@ class StegCrypt(object):
         if stegotext.dtype != 'float64':
             raise Exception(IOError, "Improperly saved stegotext file")
         return stegotext
-    
-    def open_tiff(self, filename):
-        """
-        Open an image from a tiff file
-        Ensures that the tiff array has value (0, 1) after import.
-        Parameters
-        ==========
-            filename : str
-            The filename to of the tiff image
-        Returns
-        =======
-            image : array-like, shape (rows, columns, channels)
-            The normalised image array
-        """
 
-        tiff_image = tifffile.imread(filename).astype('float64')
-        if tiff_image.max() > 1.0:
-            tiff_image /= 255
-        return tiff_image
-
-    def open_jpeg(self, filename):
-        jpeg_image = Image.open(filename)
-        img_array = np.array(jpeg_image, dtype=np.float64)
+    def open_img(self, filename):
+        image = Image.open(filename)
+        img_array = np.array(image, dtype=np.float64)
         if img_array.max() > 1.0:
             img_array /= 255
         return img_array
