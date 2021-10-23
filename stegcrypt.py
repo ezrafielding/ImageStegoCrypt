@@ -1,6 +1,7 @@
 import numpy as np
 from numpy.fft import fft2, ifft2
 import tifffile
+from PIL import Image
 
 class StegCrypt(object):
     """
@@ -10,7 +11,7 @@ class StegCrypt(object):
     'Stegotext' image. Also performs decryption of the stegotext
     image using the input covertext as a key.
 
-    Code taken and adapted from:
+    Code adapted from:
     Blackledge, J., Tobin, P., Myeza, J. and Adolfo,
     C.M., 2017. Information Hiding with Data Diffusion
     Using Convolutional Encoding for Super-Encryption.
@@ -223,3 +224,10 @@ class StegCrypt(object):
         if tiff_image.max() > 1.0:
             tiff_image /= 255
         return tiff_image
+
+    def open_jpeg(self, filename):
+        jpeg_image = Image.open(filename)
+        img_array = np.array(jpeg_image, dtype=np.float64)
+        if img_array.max() > 1.0:
+            img_array /= 255
+        return img_array
