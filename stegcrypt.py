@@ -9,6 +9,11 @@ class StegCrypt(object):
     in a chosen camouflage image, the 'Covertext' to produce a
     'Stegotext' image. Also performs decryption of the stegotext
     image using the input covertext as a key.
+
+    Code taken and adapted from:
+    Blackledge, J., Tobin, P., Myeza, J. and Adolfo,
+    C.M., 2017. Information Hiding with Data Diffusion
+    Using Convolutional Encoding for Super-Encryption.
     """
 
     # Hidden utility functions
