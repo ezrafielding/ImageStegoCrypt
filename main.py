@@ -128,7 +128,7 @@ lblInfo.grid(row=5,column=0)
 lblInfo = Label(window, font=('arial', 15, 'bold'),text="\nDecryption", fg="Black")
 lblInfo.grid(row=10,column=0)
 # Image Selection Labels
-lblInfo = Label(window, font=('arial', 8, 'italic', 'bold'),text="\nAttach Stegotext Image file (.jpg)", fg="Steel Blue")
+lblInfo = Label(window, font=('arial', 8, 'italic', 'bold'),text="\nAttach Stegotext Image file (.tiff)", fg="Steel Blue")
 lblInfo.grid(row=11,column=0)
 lblInfo = Label(window, font=('arial', 8, 'italic','bold'), text="\nAttach Covertext Image file (.jpg)", fg="Steel Blue")
 lblInfo.grid(row=13,column=0)
@@ -140,13 +140,11 @@ lblInfo.grid(row=17,column=0)
 # Encryption Image Paths
 txtDisplay = Entry(window, font=('arial',8),textvariable=folder_path_plainfile, bd=5,width =50, bg="white")
 txtDisplay.grid(row=4,column=0)
-textvariable=folder_path_plainfile.get()
 txtDisplay = Entry(window, font=('arial',8),textvariable=folder_path_coverfile1, bd=5,width=50, bg="white")
 txtDisplay.grid(row=6,column=0)
 # Decryption Image Paths
 txtDisplay = Entry(window, font=('arial',8),textvariable=folder_path_stegofile, bd=5,width =50, bg="white")
 txtDisplay.grid(row=12,column=0)
-textvariable=folder_path_plainfile.get()
 txtDisplay = Entry(window, font=('arial',8),textvariable=folder_path_coverfile2, bd=5,width=50, bg="white")
 txtDisplay.grid(row=14,column=0)
 # Status Message
