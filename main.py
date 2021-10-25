@@ -1,4 +1,4 @@
-# COS737 Assignment 3
+# COS738 Assignment 3
 # Ezra Fielding, 3869003
 
 from tkinter import filedialog
@@ -77,11 +77,19 @@ def btnDecrypt():
     except Exception as e:
         status_text.set(e)
 
+def quit():
+    '''
+    Function to end program after Tkinter window is closed
+    '''
+    root.quit()
+    root.destroy()
+
 #=============Tkinter root Window Creation=========================
 root = Tk()
 Tk().withdraw()
-root.geometry("600x620+0+0")
+root.geometry("600x650+0+0")
 root.title("Image Steganocryptography Implementation")
+root.protocol("WM_DELETE_WINDOW", quit)
 # Window Framing
 Tops = Frame(root, width = 1000, relief = SUNKEN)
 Tops.pack(side=TOP)
@@ -154,4 +162,6 @@ btnEncr=Button(window, padx=5,pady=5,bd=5,fg="black", font=('arial', 12,'bold'),
 btnbrowsestegotxt=Button(window, padx=5,pady=5,bd=5,fg="black", font=('arial', 8,'bold'), text="Select Stegotext Image",bg ="brown", command=browse_button_stegofile).grid(row=12,column=1)
 btnbrowsecovertxt2=Button(window, padx=5,pady=5,bd=5,fg="black", font=('arial', 8,'bold'), text="Select Covertext Image",bg ="brown", command=browse_button_coverfile2).grid(row=14,column=1)
 btnDecr=Button(window, padx=5,pady=5,bd=5,fg="black", font=('arial', 12,'bold'), text="Decrypt",bg ="powder blue", command=btnDecrypt).grid(row=15,column=0)
+
+#=====================Start Main Loop==============================
 root.mainloop()

@@ -1,4 +1,4 @@
-# COS737 Assignment 3
+# COS738 Assignment 3
 # Ezra Fielding, 3869003
 
 import numpy as np
@@ -118,6 +118,7 @@ class StegCrypt(object):
         
         if covertext_2D:
             stegotext = stegotext[:, :, 0]
+
         return stegotext
     
     def decrypt(self, stegotext, covertext):
@@ -253,7 +254,7 @@ class StegCrypt(object):
         # Open Image File
         image = Image.open(filename)
         # COnvert Image to array
-        img_array = np.array(image, dtype=np.float64)
+        img_array = np.array(image).astype(np.float64)
         # Normalizes image array if required
         if img_array.max() > 1.0:
             img_array /= 255
