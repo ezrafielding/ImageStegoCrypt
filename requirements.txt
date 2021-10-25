@@ -1,0 +1,4 @@
+tifffile
+tk
+Pillow
+numpy
