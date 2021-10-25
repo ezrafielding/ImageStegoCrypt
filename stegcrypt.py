@@ -1,3 +1,6 @@
+# COS737 Assignment 3
+# Ezra Fielding, 3869003
+
 import numpy as np
 from numpy.fft import fft2, ifft2
 import tifffile
@@ -71,16 +74,16 @@ class StegCrypt(object):
         Parameters
         ==========
             plaintext : array-like, shape (rows, columns, channels)
-            The plaintext image to hide.
-            Values must be ranging from 0 to 1
+                        The plaintext image to hide.
+                        Values must be ranging from 0 to 1
             covertext : array-like, shape (rows, columns, channels)
-            The covertext image in which to hide the plaintext.
+                        The covertext image in which to hide the plaintext.
             Values must be ranging from 0 to 1
-            Information Hiding with Data Diffusion using ... 347
+                        Information Hiding with Data Diffusion using ... 347
         Returns
         =======
             stegotext : array-like, shape (rows, columns, channels)
-            The stegotext image
+                        The stegotext image
         """
         c = 0.0001
         if len(covertext.shape) != 2 and len(covertext.shape) != 3:
@@ -124,15 +127,15 @@ class StegCrypt(object):
         Parameters
         ==========
             stegotext : array-like, shape (rows, columns, channels)
-            The stegotext image in which the plaintext
-            image is hidden.
+                        The stegotext image in which the plaintext
+                        image is hidden.
             covertext : array-like, shape (rows, columns, channels)
-            The covertext image (the key)
-            Values must be ranging from 0 to 1
+                        The covertext image (the key)
+                        Values must be ranging from 0 to 1
         Returns
         =======
             plaintext : array-like, shape (rows, columns, channels)
-            The hidden plaintext image
+                        The hidden plaintext image
         """
 
         if len(covertext.shape) != 2 and len(covertext.shape) != 3:
@@ -177,9 +180,9 @@ class StegCrypt(object):
         Parameters
         ==========
             stegotext : array-like, shape (rows, columns, channels)
-            The stegotext to save
+                        The stegotext to save
             filename : str
-            The filename to save the stegotext
+                       The filename to save the stegotext
         Returns
         =======
             self : object
@@ -190,20 +193,21 @@ class StegCrypt(object):
 
     def save_image(self, image, filename):
         """
-        Save stegotext as tiff file
+        Save image as jpeg file
         Parameters
         ==========
-            stegotext : array-like, shape (rows, columns, channels)
-            The stegotext to save
+            image : array-like, shape (rows, columns, channels)
+                    The image to save
             filename : str
-            The filename to save the stegotext
+                       The filename to save the image
         Returns
         =======
             self : object
         """
-
+        # Rescales Image and converts to uint8 for PIL
         rescale = (255.0 / image.max() * (image - image.min())).astype(np.uint8)
-        img = Image.fromarray(rescale).save(filename)
+        # Saves Image
+        Image.fromarray(rescale).save(filename)
         return self
 
     def open_stegotext_tiff(self, filename):
@@ -212,21 +216,46 @@ class StegCrypt(object):
         Parameters
         ==========
             filename : str
-            The filename to of the stegotext image
+                       The filename to of the stegotext image
         Returns
         =======
             stegotext : array-like, shape (rows, columns, channels)
-            The stegotext array
+                        The stegotext array
         """
+        # Checks if file name is empty
+        if filename == "":
+            # Raises exception if filename is missing
+            raise Exception(IOError, "No file selected")
 
         stegotext = tifffile.imread(filename)
+
         if stegotext.dtype != 'float64':
             raise Exception(IOError, "Improperly saved stegotext file")
+
         return stegotext
 
     def open_img(self, filename):
+        """
+        Open a image from a file
+        Parameters
+        ==========
+            filename : str
+                       The filename to of the stegotext image
+        Returns
+        =======
+            img_array : array-like, shape (rows, columns, channels)
+                        The image array
+        """
+        # Checks if file name is empty
+        if filename == "":
+            # Raises exception if filename is missing
+            raise Exception(IOError, "No file selected")
+        # Open Image File
         image = Image.open(filename)
+        # COnvert Image to array
         img_array = np.array(image, dtype=np.float64)
+        # Normalizes image array if required
         if img_array.max() > 1.0:
             img_array /= 255
+
         return img_array
